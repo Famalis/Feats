@@ -12,13 +12,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import utils.RpgConnection;
 
 /**
  *
@@ -40,19 +40,8 @@ public class Feat implements Serializable{
     private static String url = "jdbc:mysql://famalis.no-ip.biz:3306/rpg?useUnicode=true&characterEncoding=utf8";
     private static String login = "rpg";
     private static String pass  = "A9A6pq5AXPXEsbDZ";
-    
+  
     public Feat() {
-        super();
-        init();
-        if(maxId==null)
-            maxId=(long)0;
-        maxId++;
-        this.id = maxId;
-        feats.put(id, this);
-        
-    }
-    
-    public Feat(String sql) {
         super();
         init();
     }
@@ -103,21 +92,8 @@ public class Feat implements Serializable{
     }
     public static boolean loadFromSQL() {
         
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        
-        Connection c = null;
-        
-        try {
-            c = DriverManager.getConnection(
-                    url, login, pass);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+        feats.clear();
+        Connection c = RpgConnection.getConnection();
         
         if(c!=null) {
             Statement s = null;
@@ -134,7 +110,7 @@ public class Feat implements Serializable{
             
             try {
                 while(results.next()){
-                    Feat f = new Feat("s");
+                    Feat f = new Feat();
                     f.setId(results.getLong("id"));
                     f.setName(results.getString("name"));
                     f.setDescription(results.getString("description"));
