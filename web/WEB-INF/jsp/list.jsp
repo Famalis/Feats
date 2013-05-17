@@ -41,7 +41,18 @@
         <title>Feat List</title>
     </head>
     <body ng-controller="ListCtrl">
-        Filtr: <input type="text" ng-model="input"/>
+        <table>
+            <tr>
+                <td>
+        Filtr: <input type="text" ng-model="input"/>        
+                </td>
+                <td>
+                    <form action="/Feats/feats/reload" method="GET">
+                        <input type="submit" value="Odśwież listę atutów"/>
+                    </form>
+                </td>
+            </tr>
+        </table>
         <table id="basicTable" width="100%">
             <tr>
                 <td>

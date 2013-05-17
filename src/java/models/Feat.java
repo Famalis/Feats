@@ -105,6 +105,7 @@ public class Feat implements Serializable{
                 
             } catch (Exception e) {
                 e.printStackTrace();
+                RpgConnection.closeConnection(c);
                 return false;
             }
             
@@ -140,13 +141,14 @@ public class Feat implements Serializable{
                 
             } catch (Exception e) {
                 System.err.println("ResultSet reading error");
-                e.printStackTrace();
+                e.printStackTrace();  
+                RpgConnection.closeConnection(c);
                 return false;
             }
             
             
         }
-        
+        RpgConnection.closeConnection(c);
         return true;
     }
     public static boolean Load() {

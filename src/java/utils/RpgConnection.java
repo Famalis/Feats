@@ -6,6 +6,7 @@ package utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 /**
  *
@@ -37,5 +38,18 @@ public abstract class RpgConnection {
         }
         
         return c;
+    }
+    
+    public static boolean closeConnection(Connection c) {
+        
+        try {
+            c.close();
+        } catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+        
+        return true;
+     
     }
 }

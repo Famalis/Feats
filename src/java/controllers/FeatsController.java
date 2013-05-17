@@ -30,12 +30,15 @@ public class FeatsController {
     Long selectedFeatId;
     
     private void mapFeatList(ModelMap map) { 
-        Feat.loadFromSQL();
         Collection<Feat> feats = Feat.getFeats().values();
         
         
         if(feats.isEmpty()){
-            System.err.println("Feats are empty");
+            System.out.println("Loading feats from database");
+            Feat.loadFromSQL();
+            if(feats.isEmpty()) {
+                System.err.println("No feats in database");
+            }
         }
         List<Feat> featList = new ArrayList<Feat>();
         featList.addAll(feats);
@@ -69,6 +72,14 @@ public class FeatsController {
         mapFeatList(map);
         return "list";
       
+    }
+    
+    @RequestMapping(value="/feats/reload", method = RequestMethod.GET)
+    public String reload(ModelMap map) {
+        
+        Feat.loadFromSQL();
+        mapFeatList(map);        
+        return "list";
     }
     
    
