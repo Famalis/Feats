@@ -7,6 +7,7 @@ package utils;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -51,5 +52,40 @@ public abstract class RpgConnection {
         
         return true;
      
+    }
+    
+    public static boolean registerLog(String addr) {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        
+        Connection c = null;
+        
+        try {
+            c = DriverManager.getConnection(
+                    url, login, pass);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        
+        String query = "INSERT INTO logs (ip) VALUES ("
+                +"'"+addr+"')";
+        try {
+            
+            Statement s = c.createStatement();
+            s.executeUpdate(query);
+            System.out.println("LOG: Register log - "+query);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        
+        return true;
+        
+        
     }
 }

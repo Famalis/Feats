@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import models.Feat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import utils.RpgConnection;
 
 
 
@@ -47,8 +49,9 @@ public class FeatsController {
         map.addAttribute("feats", featList);
     }
     @RequestMapping(method = RequestMethod.GET)
-    public String list(ModelMap map) {
-        
+    public String list(HttpServletRequest request, ModelMap map) {
+        System.out.println(request.getRemoteAddr());
+        RpgConnection.registerLog(request.getRemoteAddr());
         mapFeatList(map);
         return "list";
     }
