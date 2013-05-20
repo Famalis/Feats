@@ -37,9 +37,6 @@ public class Feat implements Serializable{
     private static String filePath = "feats";
     private static Map<Long, Feat> feats = new Hashtable<Long, Feat>();
     private static Long maxId;
-    private static String url = "jdbc:mysql://famalis.no-ip.biz:3306/rpg?useUnicode=true&characterEncoding=utf8";
-    private static String login = "rpg";
-    private static String pass  = "A9A6pq5AXPXEsbDZ";
   
     public Feat() {
         super();
