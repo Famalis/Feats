@@ -51,6 +51,9 @@
                         <input type="submit" value="Odśwież listę atutów"/>
                     </form>
                 </td>
+                <td>
+                    Ilość odwiedzin: ${visits}
+                </td>
             </tr>
         </table>
         <table id="basicTable" width="100%">

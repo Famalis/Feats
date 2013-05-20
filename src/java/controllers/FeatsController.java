@@ -45,7 +45,7 @@ public class FeatsController {
         List<Feat> featList = new ArrayList<Feat>();
         featList.addAll(feats);
         Collections.sort(featList, new FeatComparator());
-        
+        map.addAttribute("visits",(RpgConnection.getVisits()));
         map.addAttribute("feats", featList);
     }
     @RequestMapping(method = RequestMethod.GET)
