@@ -48,6 +48,9 @@
         <title>Sheets List</title>
     </head>
     <body>
+        <div style="text-align : right">
+        <a href="/Feats/feats">Atuty</a>
+        </div>
         <table border="1px" width="100%">
             <tr id="sheetsTableHead">
                 <td>

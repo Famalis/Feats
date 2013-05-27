@@ -54,6 +54,9 @@
                 <td>
                     Ilość odwiedzin: ${visits}
                 </td>
+                <td width="60%" style="text-align: right">                    
+                    <a href="/Feats/sheets">Postaci</a>
+                </td>
             </tr>
         </table>
         <table id="basicTable" width="100%">
