@@ -33,6 +33,7 @@ public class Feat implements Serializable{
     private String description;
     private List<String> storyRequirements;
     private List<Long> requiredFeats;
+    private List<Long> forFeats;
     
     private static String filePath = "feats";
     private static Map<Long, Feat> feats = new Hashtable<Long, Feat>();
@@ -47,6 +48,7 @@ public class Feat implements Serializable{
         id = (long)0;
         storyRequirements = new ArrayList<String>();
         requiredFeats = new ArrayList<Long>();
+        forFeats = new ArrayList<Long>();
     }
     
     public String toHtmlString(){
@@ -67,6 +69,11 @@ public class Feat implements Serializable{
             str+="Brak";
         }
         str+="<br/><b>Opis</b>: "+this.description+"<br/>";
+        str+="<br/>Ten atut wymagany jest do:";
+        for (Long id : forFeats) {
+            str+=str+="<a href="+id+" style='color:blue'>"+Feat.findFeatById(id).getName()+"</a>, ";
+        }
+        str+="<br/>";
         return str;
     }
     
@@ -129,6 +136,17 @@ public class Feat implements Serializable{
                         if(!"".equals(featReqArr[i])) {
                             Long id = Long.parseLong(featReqArr[i]);
                             f.addRequiredFeat(id);
+                            System.out.println("    "+id);
+                        } else {
+                        }
+                    }
+                    
+                    String featForString = results.getString("feat_for");
+                    String[] featForArr = featForString.split(";");
+                    for(int i = 0; i<featForArr.length; i++) {
+                        if(!"".equals(featForArr[i])) {
+                            Long id = Long.parseLong(featForArr[i]);
+                            f.addForFeat(id);
                             System.out.println("    "+id);
                         } else {
                         }
@@ -227,6 +245,14 @@ public class Feat implements Serializable{
         this.requiredFeats = requiredFeats;
     }
 
+    public List<Long> getRequiredFor() {
+        return forFeats;
+    }
+
+    public void setRequiredFor(List<Long> requiredFor) {
+        this.forFeats = requiredFor;
+    }
+
     public static String getFilePath() {
         return filePath;
     }
@@ -249,6 +275,10 @@ public class Feat implements Serializable{
     
     public void addStoryRequirement(String requirement) {
         this.storyRequirements.add(requirement);
+    }
+    
+    public void addForFeat(Long id) {
+        this.forFeats.add(id);
     }
 
     public void loadFeat(Long id) {
