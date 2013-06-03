@@ -61,8 +61,8 @@ public class Feat implements Serializable{
             str+="</font>";
             count++;
         }        
-        for (Long id : requiredFeats) {
-            str+="<a href="+id+" style='color:blue'>"+Feat.findFeatById(id).getName()+"</a>, ";
+        for (Long reqId : requiredFeats) {
+            str+="<a href="+reqId+" style='color:blue'>"+Feat.findFeatById(reqId).getName()+"</a>, ";
             count++;
         }
         if(count==0) {
@@ -70,8 +70,8 @@ public class Feat implements Serializable{
         }
         str+="<br/><b>Opis</b>: "+this.description+"<br/>";
         str+="<br/>Ten atut wymagany jest do:";
-        for (Long id : forFeats) {
-            str+=str+="<a href="+id+" style='color:blue'>"+Feat.findFeatById(id).getName()+"</a>, ";
+        for (Long forId : forFeats) {
+            str+="<a href="+forId+" style='color:blue'>"+Feat.findFeatById(forId).getName()+"</a>, ";
         }
         str+="<br/>";
         return str;
