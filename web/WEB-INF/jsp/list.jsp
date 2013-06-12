@@ -54,7 +54,13 @@
                 <td>
                     Ilość odwiedzin: ${visits}
                 </td>
-                <td width="60%" style="text-align: right">                    
+                <td>
+                    Ilość atutów: ${featsCount}
+                </td>
+                <td>                     
+                    <a href="/Feats/tree/${selectedFeat}">Drzewko od danego atutu (beta) - kliknij tu</a>
+                </td>
+                <td width="20%" style="text-align: right">                    
                     <a href="/Feats/sheets">Postaci</a>
                 </td>
             </tr>
@@ -62,6 +68,7 @@
         <table id="basicTable" width="100%">
             <tr>
                 <td>
+                    <div style="height: 600px; overflow: auto">
                     <table id="listTable" border="1px">
                         <c:forEach varStatus="status" var="feat" items="${feats}"> 
                             <tr ng-show="contains('${feat.name}', input)">
@@ -71,6 +78,7 @@
                             </tr>
                         </c:forEach>
                     </table>
+                    </div>
                 </td>
                 <td width="80%"  align="top">
                     <div id="featInfo">

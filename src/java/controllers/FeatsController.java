@@ -11,6 +11,7 @@ import java.util.Comparator;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import models.Feat;
+import models.FeatNode;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,6 +48,8 @@ public class FeatsController {
         Collections.sort(featList, new FeatComparator());
         map.addAttribute("visits",(RpgConnection.getVisits()));
         map.addAttribute("feats", featList);
+        map.addAttribute("featsCount",featList.size());
+        
     }
     @RequestMapping(method = RequestMethod.GET)
     public String list(HttpServletRequest request, ModelMap map) {
@@ -64,6 +67,7 @@ public class FeatsController {
         mapFeatList(map);
         Long id = Long.parseLong(idStr);
         selectedFeatId = id;
+        map.addAttribute("selectedFeat", selectedFeatId);
         map.addAttribute("feat", Feat.findFeatById(id));
         return "list";
     }
@@ -81,6 +85,8 @@ public class FeatsController {
     public String reload(ModelMap map) {
         
         Feat.loadFromSQL();
+        FeatNode ft = new FeatNode(2L);
+        System.out.println(ft.listTree("-"));
         mapFeatList(map);        
         return "list";
     }

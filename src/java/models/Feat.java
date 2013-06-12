@@ -123,6 +123,7 @@ public class Feat implements Serializable{
                     String storyReqString = results.getString("story_req");
                     String[] storyReqArr  = storyReqString.split(";");
                     System.out.println(f.getId()+" "+f.getName());
+                    System.out.println("Requirements:");
                     for (int i = 0; i<storyReqArr.length ; i++) {
                         if(!"".equals(storyReqArr[i])) {
                             f.addStoryRequirement(storyReqArr[i]);
@@ -143,6 +144,7 @@ public class Feat implements Serializable{
                     
                     String featForString = results.getString("feat_for");
                     String[] featForArr = featForString.split(";");
+                    System.out.println("Needed for:");
                     for(int i = 0; i<featForArr.length; i++) {
                         if(!"".equals(featForArr[i])) {
                             Long id = Long.parseLong(featForArr[i]);
@@ -151,6 +153,7 @@ public class Feat implements Serializable{
                         } else {
                         }
                     }
+                    System.out.println("-------------------");
                     feats.put(f.getId(), f);
                 }
                 
