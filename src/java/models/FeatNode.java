@@ -17,6 +17,7 @@ public class FeatNode {
     private static Long maxId = 0L;
     private static Map<Long, FeatNode> nodes = new Hashtable<Long, FeatNode>();
     private static ArrayList<Long> containedFeats = new ArrayList<Long>();
+    //private Integer tier = 0;
     private Long id = 0L;
     private ArrayList<Long> parents = new ArrayList<Long>();
     private Long feat = 0L;
@@ -24,8 +25,29 @@ public class FeatNode {
 
     public static void initData() {
         for (Feat f : Feat.getFeats().values()) {
-            
         }
+    }
+    
+    public String getFeatName() {
+        return Feat.getFeats().get(feat).getName();
+    }
+
+    public Integer getTier() {
+        Integer tier = 1;
+        if (!parents.isEmpty()) {
+            int tmpTier = 0;
+            int maxTier = 0;
+            for (Long parentId : parents) {
+                tmpTier = nodes.get(parentId).getTier();
+                if (maxTier < tmpTier) {
+                    maxTier = tmpTier;
+                }
+
+            }
+            tier += maxTier;
+        }
+
+        return tier;
     }
 
     public FeatNode(Long feat) {
@@ -42,24 +64,25 @@ public class FeatNode {
         }
 
     }
-    
-    private static FeatNode getNode(Long parentId,Long featId) {
-        if(containedFeats.contains(featId)) {
+
+    private static FeatNode getNode(Long parentId, Long featId) {
+        if (containedFeats.contains(featId)) {
             for (FeatNode n : nodes.values()) {
-                if(n.getFeat()==featId){
+                if (n.getFeat() == featId) {
                     nodes.get(n.getId()).getParents().add(parentId);
                     System.out.println("Node returned withour creating new");
-                    System.out.println("Parents updates for: "+n.getFeat()+ " New parents size: "+n.getParents().size());
+                    System.out.println("Parents updates for: " + n.getFeat() + " New parents size: " + n.getParents().size());
                     return nodes.get(n.getId());
                 }
             }
-        } 
-        System.out.println("New feat created as child for "+nodes.get(parentId));
+        }
+        System.out.println("New feat created as child for " + nodes.get(parentId));
         return new FeatNode(parentId, featId);
     }
+
     public FeatNode(Long parentId, Long featId) {
 
-        
+
         maxId++;
         this.id = maxId;
         this.feat = featId;
@@ -81,7 +104,7 @@ public class FeatNode {
                 + "<tr>\n"
                 + "<td colspan='" + 15 + "'>\n"
                 + "<p style=\"text-align: center;\">"
-                + "<a href=\"/Feats/feats/" + feat + "\" style='color:blue'>" + Feat.findFeatById(feat).getName() + "</a>"
+                + "<a href=\"/Feats/feats/" + feat + "\" style='color:blue'>" + Feat.findFeatById(feat).getName() + " "+this.getTier()+"</a>"
                 + "</p>\n"
                 + "</td>\n"
                 + "</tr>\n";
@@ -162,6 +185,4 @@ public class FeatNode {
     public static ArrayList<Long> getContainedFeats() {
         return containedFeats;
     }
-    
-    
 }

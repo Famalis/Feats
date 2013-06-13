@@ -47,6 +47,8 @@ public abstract class RpgConnection {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        }   catch(NullPointerException nullEx) {
+            return true;
         }
 
         return true;
@@ -63,6 +65,9 @@ public abstract class RpgConnection {
                 size++;
             }
         } catch (SQLException sqlEx) {
+            return -1;
+        } catch (NullPointerException nullEx) {
+            return -1;
         }
         closeConnection(c);
         return size;

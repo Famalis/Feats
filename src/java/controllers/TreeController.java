@@ -20,7 +20,43 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/tree")
 public class TreeController {
-
+    
+    @RequestMapping(value = "/tree/full", method = RequestMethod.GET)
+    public String fullTree(ModelMap map) {
+        if (Feat.getFeats().isEmpty()) {
+            Feat.loadFromSQL();
+        }
+        ArrayList<FeatNode> nodes = new ArrayList<FeatNode>();
+        ArrayList<Integer> tiers = new ArrayList<Integer>();
+        int count = 0;
+        if (FeatNode.getNodes().isEmpty()) {
+            for (Feat f : Feat.getFeats().values()) {
+                if (f.getRequiredFeats().isEmpty()) {
+                    System.out.println("Making node for " + f.getName());
+                    if (!FeatNode.getContainedFeats().contains(f.getId())) {
+                        nodes.add(new FeatNode(f.getId()));
+                        count++;
+                    }
+                    
+                }
+            }
+        } else {
+            nodes.addAll(FeatNode.getNodes().values());
+        }
+        System.out.println(count + " == " + nodes.size() + " == " + FeatNode.getNodes().values().size());
+       
+        tiers.add(1);
+        tiers.add(2);
+        tiers.add(3);
+        tiers.add(4);
+        tiers.add(5);
+        tiers.add(6);
+        System.out.println(nodes.size());
+        map.addAttribute("tiers", tiers);
+        map.addAttribute("nodeArr", nodes);
+        return "fulltree";
+    }
+    
     @RequestMapping(method = RequestMethod.GET)
     public String generalTree(ModelMap map) {
         if (Feat.getFeats().isEmpty()) {
@@ -28,15 +64,19 @@ public class TreeController {
         }
         ArrayList<FeatNode> nodes = new ArrayList<FeatNode>();
         int count = 0;
-        for (Feat f : Feat.getFeats().values()) {
-            if (f.getRequiredFeats().isEmpty()) {
-                System.out.println("Making node for " + f.getName());
-                if (!FeatNode.getContainedFeats().contains(f.getId())) {
-                    nodes.add(new FeatNode(f.getId()));
-                    count++;
+        if (FeatNode.getNodes().isEmpty()) {            
+            for (Feat f : Feat.getFeats().values()) {
+                if (f.getRequiredFeats().isEmpty()) {
+                    System.out.println("Making node for " + f.getName());
+                    if (!FeatNode.getContainedFeats().contains(f.getId())) {
+                        nodes.add(new FeatNode(f.getId()));
+                        count++;
+                    }
+                    
                 }
-
             }
+        } else {
+            nodes.addAll(FeatNode.getNodes().values());
         }
         System.out.println(count + " == " + nodes.size() + " == " + FeatNode.getNodes().values().size());
         for (int i = 0; i < nodes.size(); i++) {
@@ -49,7 +89,7 @@ public class TreeController {
         map.addAttribute("nodeArr", nodes);
         return "tree";
     }
-
+    
     @RequestMapping(value = "/tree/{id}", method = RequestMethod.GET)
     public String featTree(@PathVariable(value = "id") String idStr, ModelMap map) {
         Long id = Long.parseLong(idStr);

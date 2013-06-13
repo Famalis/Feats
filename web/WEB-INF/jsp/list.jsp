@@ -13,17 +13,17 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
         <script src="ftp://Sergio:Qu0v4d1s1@famalis.no-ip.biz/FTP/resources/ListCtrl.js"></script>
         <style type="text/css">
-            #listTable{
-                
-            }
-            
             #featInfo {
                 font-size: 36px;
             }
             td {
                 vertical-align: top;
             }
+            html {
+                height: 100%;
+            }
             body {
+                height: 100%;
                 font-family: 'Metamorphous';
                 background-image: url("ftp://Sergio:Qu0v4d1s1@famalis.no-ip.biz/FTP/resources/feats_bg1.jpg");
             }
@@ -34,6 +34,7 @@
                 color:black;
                 text-decoration: none;
             }
+
         </style>
         <link href='http://fonts.googleapis.com/css?family=Metamorphous&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -41,10 +42,13 @@
         <title>Feat List</title>
     </head>
     <body ng-controller="ListCtrl">
-        <table>
+        <table width="100%">
+            
+        </table>
+        <table width="100%" style="height : 100%;">
             <tr>
-                <td>
-        Filtr: <input type="text" ng-model="input"/>        
+                <td style="height: 50px">
+                    Filtr: <input type="text" ng-model="input"/>        
                 </td>
                 <td>
                     <form action="/Feats/feats/reload" method="GET">
@@ -60,41 +64,42 @@
                 <td>                     
                     <a href="/Feats/tree/${selectedFeat}">Drzewko od danego atutu (beta) - kliknij tu</a>
                 </td>
-                <td width="20%" style="text-align: right">                    
+                <td>
+                    <a href="/Feats/tree">Wszystkie drzewka (beta) - kliknij tu</a>
+                </td>
+                <td style="text-align: right">                    
                     <a href="/Feats/sheets">Postaci</a>
                 </td>
             </tr>
-        </table>
-        <table id="basicTable" width="100%">
             <tr>
                 <td>
-                    <div style="height: 600px; overflow: auto">
-                    <table id="listTable" border="1px">
-                        <c:forEach varStatus="status" var="feat" items="${feats}"> 
-                            <tr ng-show="contains('${feat.name}', input)">
-                                <td style="padding : 10px; margin: 10px">
-                                    <a href="/Feats/feats/${feat.id}">${feat.name}</a><br/>            
-                                </td>
-                            </tr>
+                    <div style="height: 100%; overflow: auto">
+                        <c:forEach varStatus="status" var="feat" items="${feats}">
+                            <table width="100%" style="padding : 10px; border: 1px solid black;">
+                                <tr ng-show="contains('${feat.name}', input)">
+                                    <td>
+                                        <a href="/Feats/feats/${feat.id}">${feat.name}</a><br/> 
+                                    </td>
+                                </tr>
+                            </table>                            
                         </c:forEach>
-                    </table>
                     </div>
                 </td>
-                <td width="80%"  align="top">
+                <td colspan="6" width="80%"  align="top">
                     <div id="featInfo">
-                            ${feat.toHtmlString()}
+                        ${feat.toHtmlString()}
                     </div>
                     <hr/>
                     <div ng-hide="angular.equals('${feat.name}','')">
-                    Legenda:
-                    <ul>                        
-                        <li>
-                            <font color="blue">Wymagania na niebiesko to wymagane atuty</font><br/>
-                        </li>
-                        <li>
-                            <font color="purple">Wymagania na fioletowo to wymogi fabularne</font>
-                        </li>
-                    </ul>
+                        Legenda:
+                        <ul>                        
+                            <li>
+                                <font color="blue">Wymagania na niebiesko to wymagane atuty</font><br/>
+                            </li>
+                            <li>
+                                <font color="purple">Wymagania na fioletowo to wymogi fabularne</font>
+                            </li>
+                        </ul>
                     </div>
                     <form ng-hide='true' action="/Feats/feats/${feat.id}" method="POST">
                         Data for ${feat.id}<br/>
