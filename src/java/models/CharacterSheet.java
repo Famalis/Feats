@@ -43,7 +43,7 @@ public class CharacterSheet {
         Feat.loadFromSQL();
         for (Long l : feats) {
             System.out.println(l+"");
-            str+=Feat.findFeatById(l).getName()+"<br/>";
+            str+=Feat.findFeatById(l).getName()+"<br/><hr/>";
             
         }
         return str;

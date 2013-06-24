@@ -43,7 +43,7 @@
     </head>
     <body ng-controller="ListCtrl">
         <table width="100%">
-            
+
         </table>
         <table width="100%" style="height : 100%;">
             <tr>
@@ -74,15 +74,15 @@
             <tr>
                 <td>
                     <div style="height: 100%; overflow: auto">
-                        <c:forEach varStatus="status" var="feat" items="${feats}">
-                            <table width="100%" style="padding : 10px; border: 1px solid black;">
+                        <table width="100%" >
+                            <c:forEach varStatus="status" var="feat" items="${feats}">
                                 <tr ng-show="contains('${feat.name}', input)">
-                                    <td>
-                                        <a href="/Feats/feats/${feat.id}">${feat.name}</a><br/> 
+                                    <td style="padding : 10px; margin: 10px; border: 1px solid black;">
+                                        <a href="/Feats/feats/${feat.id}">${feat.name}</a>
                                     </td>
                                 </tr>
-                            </table>                            
-                        </c:forEach>
+                            </c:forEach>
+                        </table>                
                     </div>
                 </td>
                 <td colspan="6" width="80%"  align="top">
